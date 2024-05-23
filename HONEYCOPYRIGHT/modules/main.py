@@ -40,7 +40,7 @@ async def start(_, msg):
     reply_markup = InlineKeyboardMarkup(buttons)
     
     await msg.reply_photo(
-        photo="https://graph.org/file/204d82eed267358ab357b.jpg",
+        photo="https://graph.org/file/ad0bd6b3491e599d6ec9b.jpg",
         caption=start_txt,
         reply_markup=reply_markup
     )
