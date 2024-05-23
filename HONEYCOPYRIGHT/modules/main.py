@@ -31,10 +31,10 @@ start_txt = """<b> 🤖 𝗖𝗢𝗣𝗬𝗥𝗜𝗚𝗛𝗧 𝗚𝗔𝗨𝗥�
 async def start(_, msg):
     buttons = [
         [ 
-          InlineKeyboardButton("𝐒ᴜᴍᴍᴏ ᴍᴇ", url=f"http://t.me/Group_securityxbot?startgroup=true")
+          InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"http://t.me/Group_securityxbot?startgroup=true")
         ],
         [
-          InlineKeyboardButton("• 𝐇ᴀɴᴅʟᴇʀ •", callback_data="dil_back")
+          InlineKeyboardButton("• ᴀʙᴏᴜᴛ •", callback_data="dil_back")
         ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
