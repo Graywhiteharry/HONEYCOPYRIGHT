@@ -93,8 +93,7 @@ async def handle_message(client, message):
     if any(keyword in message.text for keyword in FORBIDDEN_KEYWORDS):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
-        await message.reply_text(f"@{message.from_user
-                await message.reply_text(f"@{message.from_user.username} PLEASE DON'T SEND AGAIN!!")
+        await message.reply_text(f"@{message.from_user.username} PLEASE DON'T SEND AGAIN!!")
     elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
