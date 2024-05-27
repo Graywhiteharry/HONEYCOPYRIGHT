@@ -101,8 +101,7 @@ async def handle_message(client, message):
 
 @app.on_edited_message(filters.group & ~filters.me)
 async def delete_edited_messages(client, edited_message):
-    original_message = await app.get_messages(edited_message.chat.id, edited_message.message_id)
-    if original_message.text != edited_message.text:
+    if edited_message.text != edited_message.previous_text:
         await edited_message.delete()
 
 def delete_long_messages(_, m):
