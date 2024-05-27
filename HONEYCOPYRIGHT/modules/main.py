@@ -126,4 +126,4 @@ async def keep_reaction_message(client, message: Message):
 async def delete_pdf_files(client, message):
     if message.document and message.document.mime_type == "application/pdf":
         print(f"Deleting PDF message with ID {message.id} from user: {message.from_user.username} in chat: {message.chat.title}")  # Debug log
-        warning_message = f"@{message.from_user.username} ᴍᴀᴀ ᴍᴀᴛ ᴄʜᴜᴅᴀ ᴘᴅғ ʙʜᴇᴊ ᴋᴇ,\n ʙʜᴏsᴀᴅɪᴋᴇ ᴄᴏᴘʏʀɪɢʜᴛ 
+        warning_message = f"@{message.from_user.username} ᴍᴀᴀ ᴍᴀᴛ ᴄʜᴜᴅᴀ ᴘᴅғ ʙʜᴇᴊ ᴋᴇ,\n ʙʜᴏsᴀᴅɪᴋᴇ ᴄᴏᴘʏʀɪɢʜᴛ"
