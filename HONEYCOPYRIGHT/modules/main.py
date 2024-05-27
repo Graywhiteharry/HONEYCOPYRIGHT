@@ -4,6 +4,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 from pyrogram import filters
 from pyrogram.types import Message
 import time
+import hashlib
 import psutil
 import platform
 import logging
@@ -101,7 +102,14 @@ async def handle_message(client, message):
 
 @app.on_edited_message(filters.group & ~filters.me)
 async def delete_edited_messages(client, edited_message):
-    if edited_message.text != edited_message.previous_text:
+    original_message = await app.get_messages(edited_message.chat.id, edited_message.message_id)
+    
+    # Calculate hash values for the text content of both messages
+    edited_hash = hashlib.sha256(edited_message.text.encode()).hexdigest()
+    original_hash = hashlib.sha256(original_message.text.encode()).hexdigest()
+    
+    # Compare the hash values
+    if edited_hash != original_hash:
         await edited_message.delete()
 
 def delete_long_messages(_, m):
