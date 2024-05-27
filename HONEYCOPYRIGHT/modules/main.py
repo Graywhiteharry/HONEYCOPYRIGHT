@@ -1,13 +1,9 @@
 from pyrogram import Client, filters
 import os
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
-from pyrogram.types import Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, Message
 import time
 import psutil
-from pyrogram import filters
-from pyrogram import filters
 import platform
-import logging
 from config import OWNER_ID, BOT_USERNAME
 from config import *
 from HONEYCOPYRIGHT import HONEYCOPYRIGHT as app
@@ -15,23 +11,18 @@ from HONEYCOPYRIGHT import HONEYCOPYRIGHT as app
 import pyrogram
 from pyrogram.errors import FloodWait
 
-# Setup logging
-logging.basicConfig(level=logging.INFO)
 
 # ----------------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------------------
-
-# -------------------------------------------------------------------------------------
-
 
 start_txt = """<b> ❄️ 𝗖𝗢𝗣𝗬𝗥𝗜𝗚𝗛𝗧 𝗚𝗔𝗨𝗥𝗗 🛡️ </b>
 
-𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝗍𝗈 𝗖𝗢𝗣𝗬𝗥𝗜𝗚𝗛𝗧 𝗚𝗔𝗨𝗥𝗗 🛡️, ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴄᴏᴘʏʀɪɢʜᴛ ɢᴜᴀʀᴅ ꜱᴇʀᴠɪᴄᴇ
+𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝗍𝗈 𝗖𝗢𝗣𝗒𝗋𝗂𝗀𝗁𝗍 𝗚𝗔𝗨𝗥𝗗 🛡️, ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴄᴏᴘʏʀɪɢʜᴛ ɢᴜᴀʀᴅ ꜱᴇʀᴠɪᴄᴇ
 ᴡʜᴀᴛ ᴅᴏᴇꜱ ᴛʜɪꜱ ʙᴏᴛ ᴅᴏ?
 ᴛʜɪꜱ ʙᴏᴛ ᴡɪʟʟ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛ ꜰʀᴏᴍ ᴄᴏᴍᴍᴜɴɪᴛʏ ᴀɴᴅ ꜰʀᴏᴍ ᴄᴏᴘʏʀɪɢʜᴛ ꜱᴛʀɪᴋᴇꜱ ɪᴛ ᴡɪʟʟ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛ 100% ɴᴏ ᴏɴᴇ ᴄᴀɴ ᴅᴇꜱᴛʀᴏʏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴛʜɪꜱ ʙᴏᴛ🔐 """
 
 @app.on_message(filters.command("start"))
 async def start(_, msg):
+    print("Received /start command from user:", msg.from_user.username)  # Debug log
     buttons = [
         [ 
           InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"http://t.me/Group_securityxbot?startgroup=true")
@@ -47,6 +38,7 @@ async def start(_, msg):
         caption=start_txt,
         reply_markup=reply_markup
     )
+    print("Replied to /start command")  # Debug log
 
 
 gd_buttons = [              
@@ -54,22 +46,13 @@ gd_buttons = [
             InlineKeyboardButton("𝐎ᴡɴᴇʀ", user_id=OWNER_ID),
             InlineKeyboardButton("𝐒ᴜᴘᴘᴏʀᴛ", url="https://t.me/mutals_log"),    
         ]
-        ]
-
-# ------------------------------------------------------------------------------- #
-
+]
 
 @app.on_callback_query(filters.regex("dil_back"))
 async def dil_back(_, query: CallbackQuery):
-    await query.message.edit_caption(start_txt,
-                                    reply_markup=InlineKeyboardMarkup(gd_buttons),)
-        
-
-# -------------------------------------------------------------------------------------
-
-
-# -------------------------------------------------------------------------------------
-
+    print(f"Callback query received: {query.data} from user: {query.from_user.username}")  # Debug log
+    await query.message.edit_caption(start_txt, reply_markup=InlineKeyboardMarkup(gd_buttons))
+    print("Edited message caption for callback query")  # Debug log
 
 start_time = time.time()
 
@@ -88,6 +71,7 @@ def size_formatter(bytes: int) -> str:
 
 @app.on_message(filters.command("ping"))
 async def activevc(_, message: Message):
+    print("Received /ping command from user:", message.from_user.username)  # Debug log
     uptime = time_formatter((time.time() - start_time) * 1000)
     cpu = psutil.cpu_percent()
     storage = psutil.disk_usage('/')
@@ -104,29 +88,25 @@ async def activevc(_, message: Message):
     )
 
     await message.reply(reply_text, quote=True)
-
-
-    
-# -------------------------------------------------------------------------------------
-
-
+    print("Replied to /ping command")  # Debug log
 
 FORBIDDEN_KEYWORDS = ["Porn", "xxx", "sex", "NCERT", "XII", "page", "Ans", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt"]
 
 @app.on_message()
 async def handle_message(client, message):
+    print(f"Received message: {message.text} from user: {message.from_user.username} in chat: {message.chat.title}")  # Debug log
     if any(keyword in message.text for keyword in FORBIDDEN_KEYWORDS):
-        logging.info(f"Deleting message with ID {message.id} due to forbidden keyword in text")
+        print(f"Deleting message with ID {message.id} due to forbidden keyword in text")  # Debug log
         await message.delete()
         await message.reply_text(f"@{message.from_user.username} PLEASE DON'T SEND AGAIN!!")
-    elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS):
-        logging.info(f"Deleting message with ID {message.id} due to forbidden keyword in caption")
+    elif message.caption and any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS):
+        print(f"Deleting message with ID {message.id} due to forbidden keyword in caption")  # Debug log
         await message.delete()
         await message.reply_text(f"@{message.from_user.username} PLEASE DONT SEND AGAIN!!")
 
 @app.on_edited_message(filters.group & ~filters.me)
 async def delete_edited_messages(client, edited_message):
-    logging.info(f"Deleting edited message with ID {edited_message.id}")
+    print(f"Deleting edited message with ID {edited_message.id} in chat: {edited_message.chat.title}")  # Debug log
     await edited_message.delete()
 
 def delete_long_messages(_, m):
@@ -134,28 +114,16 @@ def delete_long_messages(_, m):
 
 @app.on_message(filters.group & filters.private & delete_long_messages)
 async def delete_and_reply(_, msg):
-    logging.info(f"Deleting long message with ID {msg.id}")
+    print(f"Deleting long message with ID {msg.id} from user: {msg.from_user.username} in chat: {msg.chat.title}")  # Debug log
     await msg.delete()
     user_mention = msg.from_user.mention
     await app.send_message(msg.chat.id, f"Hey {user_mention}, please keep your messages short!")
 
-# -----------------------------------------------------------------------------------
-
 @app.on_message(filters.animation | filters.audio | filters.document | filters.photo | filters.sticker | filters.video)
 async def keep_reaction_message(client, message: Message):
-    logging.info(f"Received media message with ID {message.id}")
+    print(f"Received media message with ID {message.id} from user: {message.from_user.username} in chat: {message.chat.title}")  # Debug log
 
 async def delete_pdf_files(client, message):
     if message.document and message.document.mime_type == "application/pdf":
-        warning_message = f"@{message.from_user.username} ᴍᴀᴀ ᴍᴀᴛ ᴄʜᴜᴅᴀ ᴘᴅғ ʙʜᴇᴊ ᴋᴇ,\n ʙʜᴏsᴀᴅɪᴋᴇ ᴄᴏᴘʏʀɪɢʜᴛ ʟᴀɢʏᴇɢᴀ \n\n ᴅᴇʟᴇᴛᴇ ᴋᴀʀ ᴅɪʏᴀ ᴍᴀᴅᴀʀᴄʜᴏᴅ.\n\n ᴀʙ @OgHoneyy ʙʜᴀɪ ᴋᴇ ᴅᴍ ᴍᴇ ᴀᴘɴɪ ᴍᴜᴍᴍʏ ᴋᴏ ʙʜᴇᴊ ᴅᴇ 🍌🍌🍌."
-        logging.info(f"Deleting PDF message with ID {message.id}")
-        await message.reply_text(warning_message)
-        await message.delete()
-    else:  
-        logging.info(f"Received non-PDF document with ID {message.id}")
-
-@app.on_message(filters.group & filters.document)
-async def message_handler(client, message):
-    await delete_pdf_files(client, message)
-
-# ----------------------------------------
+        print(f"Deleting PDF message with ID {message.id} from user: {message.from_user.username} in chat: {message.chat.title}")  # Debug log
+        warning_message = f"@{message.from_user.username} ᴍᴀᴀ ᴍᴀᴛ ᴄʜᴜᴅᴀ ᴘᴅғ ʙʜᴇᴊ ᴋᴇ,\n ʙʜᴏsᴀᴅɪᴋᴇ ᴄᴏᴘʏʀɪɢʜᴛ 
